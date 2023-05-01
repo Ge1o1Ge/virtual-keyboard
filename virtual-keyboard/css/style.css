@@ -486,3 +486,7 @@ input:active, input:hover, input:focus {
   background-color: #ba5925;
   border-radius: 15px;
 }
+.keyboard__key--active {
+  background-color: #ba5925;
+  border-radius: 15px;
+}
