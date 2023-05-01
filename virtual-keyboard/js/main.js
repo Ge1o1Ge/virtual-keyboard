@@ -55,6 +55,7 @@ const keyboard = {
     container.appendChild(this.elements.main);
 
     let inp = document.querySelector(".keyboard__input");
+    inp.focus();
     window.addEventListener("click", () => {
       inp.value = this.properties.value;
     })
@@ -102,7 +103,7 @@ const keyboard = {
             this._toggleShiftLang();
             break;
           }
-        } else if (e.key == key.textContent) {
+        } else if (e.key == key.textContent || e.key == key.getAttribute("data_key-basick") || e.key == key.getAttribute("data_key-shifted") || e.key == key.getAttribute("data_key-basickru") || e.key == key.getAttribute("data_key-shiftedru")) {
           key.classList.add("keyboard__key--active");
           this.properties.value = inp.value;
         }
@@ -134,7 +135,7 @@ const keyboard = {
           key.classList.remove("keyboard__key--active");
         } else if (e.key == "Alt" && key.textContent == "Alt") {
           key.classList.remove("keyboard__key--active");
-        } else if (e.key == key.textContent) {
+        } else if (e.key == key.textContent || e.key == key.getAttribute("data_key-basick") || e.key == key.getAttribute("data_key-shifted") || e.key == key.getAttribute("data_key-basickru") || e.key == key.getAttribute("data_key-shiftedru")) {
           key.classList.remove("keyboard__key--active")
         }
       }
@@ -403,6 +404,7 @@ const keyboard = {
 let keyboardInner = document.createElement("textarea");
 keyboardInner.classList.add("keyboard__input");
 keyboardInner.setAttribute("type", "text");
+keyboardInner.setAttribute("autofocus",'');
 
 let container = document.createElement("div");
 container.classList.add("container");
