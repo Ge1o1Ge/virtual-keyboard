@@ -49,7 +49,6 @@ const keyboard = {
     this.elements.keyContainer.appendChild(this._createKeys());
 
     this.elements.keys = this.elements.keyContainer.querySelectorAll(".keyboard__key")
-    const keys = this.elements.keys
 
     this.elements.main.appendChild(this.elements.keyContainer);
     container.appendChild(this.elements.main);
@@ -89,6 +88,12 @@ const keyboard = {
           key.classList.add("keyboard__key--active");
         } else if (e.key == "Meta" && key.textContent == "Win") {
           key.classList.add("keyboard__key--active");
+        } else if (e.key == "Alt" && key.textContent == "Alt") {
+          key.classList.add("keyboard__key--active");
+          if (this.properties.shift) {
+            this._toggleShiftLang();
+            break;
+          }
         } else if (e.key == key.textContent) {
           key.classList.add("keyboard__key--active");
           this.properties.value = inp.value;
@@ -119,10 +124,11 @@ const keyboard = {
           key.classList.remove("keyboard__key--active");
         } else if (e.key == "Meta" && key.textContent == "Win") {
           key.classList.remove("keyboard__key--active");
+        } else if (e.key == "Alt" && key.textContent == "Alt") {
+          key.classList.remove("keyboard__key--active");
         } else if (e.key == key.textContent) {
           key.classList.remove("keyboard__key--active")
         }
-
       }
     })
   },
@@ -146,7 +152,7 @@ const keyboard = {
 
     const basickRuKeys = [
       ["ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "none"],
-      ["none", "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ", "none", "none"],
+      ["none", "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ", "\\", "none"],
       ["none", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "none"],
       ["none", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".", "none", "none"],
       ["none", "none", "none", "none", "none", "none", "none", "none", "none"]
@@ -154,7 +160,7 @@ const keyboard = {
 
     const shiftRuKeys = [
       ["symbol", "!", `"`, "№", ";", "%", ":", "?", "*", "(", ")", "_", "+", "none"],
-      ["none", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "none", "none"],
+      ["none", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "/", "none"],
       ["none", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "none"],
       ["none", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", "symbol", ",", "none", "none"],
       ["none", "none", "none", "none", "none", "none", "none", "none", "none"]
@@ -173,10 +179,10 @@ const keyboard = {
         key.setAttribute("data_key-basick", keys[i][j])
         key.setAttribute("data_key-shifted", shiftKeys[i][j])
 
-        
+
         key.setAttribute("data_key-basickru", basickRuKeys[i][j])
         key.setAttribute("data_key-shiftedru", shiftRuKeys[i][j])
-        
+
 
         key.innerHTML = keys[i][j];
 
@@ -246,7 +252,10 @@ const keyboard = {
           case "Alt":
             key.setAttribute("special", true);
             key.addEventListener("click", () => {
-              this._toggleShiftLang();
+              if (this.properties.shift) {
+                this._toggleShift()
+                this._toggleShiftLang();
+              }
             })
             break;
 
@@ -283,6 +292,9 @@ const keyboard = {
           default:
             key.addEventListener("click", () => {
               this.properties.value += key.textContent;
+              if (this.properties.shift) {
+                this._toggleShift()
+              }
               this._triggerEv("oninput");
             })
             break;
@@ -303,6 +315,14 @@ const keyboard = {
 
   _toggleShift() {
     this.properties.shift = !this.properties.shift;
+
+    if (!this.properties.shift) {
+      let shifts = document.querySelectorAll(".keyboard__key-shift")
+      shifts.forEach((el) => {
+        el.classList.remove("keyboard__key--active")
+      })
+    }
+
     let shifted, basick;
     if (this.properties.language == "en") {
       shifted = "data_key-shifted"
@@ -377,8 +397,20 @@ keyboardInner.setAttribute("type", "text");
 let container = document.createElement("div");
 container.classList.add("container");
 
+let title = document.createElement("h1");
+title.classList.add("keyboard__title")
+title.innerHTML = "RSS Виртуальная клавиатура"
+
+let p = document.createElement("p");
+p.classList.add("keyboard__p");
+p.innerHTML = "Для переключения языка комбинация: Shift + Alt"
+
+container.appendChild(title);
 container.appendChild(keyboardInner);
+
+
 document.body.appendChild(container);
+document.body.appendChild(p);
 
 
 window.addEventListener("DOMContentLoaded", function () {

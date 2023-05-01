@@ -343,6 +343,7 @@ body {
   color: #000000;
   overflow-x: hidden;
   min-width: 320px;
+  background-color: #2f2b2b;
 }
 
 ul[class],
@@ -435,7 +436,7 @@ input:active, input:hover, input:focus {
   max-width: 1000px;
   width: 100%;
   margin: 10px auto;
-  height: 100px;
+  height: 250px;
   background-color: #c8c3c3;
   font-size: 20px;
   transition: 0.2s;
@@ -489,4 +490,16 @@ input:active, input:hover, input:focus {
 .keyboard__key--active {
   background-color: #ba5925;
   border-radius: 15px;
+}
+.keyboard__p {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 20px;
+  color: #c8c3c3;
+}
+.keyboard__title {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 45px;
+  color: #c8c3c3;
 }
