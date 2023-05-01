@@ -41,6 +41,7 @@ const keyboard = {
   },
 
   init() {
+
     this.elements.main = document.createElement("div");;
     this.elements.keyContainer = document.createElement("div");
 
@@ -54,9 +55,17 @@ const keyboard = {
     container.appendChild(this.elements.main);
 
     let inp = document.querySelector(".keyboard__input");
+    inp.focus();
     window.addEventListener("click", () => {
       inp.value = this.properties.value;
     })
+
+    const savedLanguage = localStorage.getItem('selectedLanguage');
+    if (savedLanguage) {
+      if (savedLanguage == 'ru') {
+        this._toggleShiftLang();
+      };
+    }
 
     window.addEventListener("keydown", (e) => {
       console.log(e.key)
@@ -94,7 +103,7 @@ const keyboard = {
             this._toggleShiftLang();
             break;
           }
-        } else if (e.key == key.textContent) {
+        } else if (e.key == key.textContent || e.key == key.getAttribute("data_key-basick") || e.key == key.getAttribute("data_key-shifted") || e.key == key.getAttribute("data_key-basickru") || e.key == key.getAttribute("data_key-shiftedru")) {
           key.classList.add("keyboard__key--active");
           this.properties.value = inp.value;
         }
@@ -126,7 +135,7 @@ const keyboard = {
           key.classList.remove("keyboard__key--active");
         } else if (e.key == "Alt" && key.textContent == "Alt") {
           key.classList.remove("keyboard__key--active");
-        } else if (e.key == key.textContent) {
+        } else if (e.key == key.textContent || e.key == key.getAttribute("data_key-basick") || e.key == key.getAttribute("data_key-shifted") || e.key == key.getAttribute("data_key-basickru") || e.key == key.getAttribute("data_key-shiftedru")) {
           key.classList.remove("keyboard__key--active")
         }
       }
@@ -373,6 +382,7 @@ const keyboard = {
   _toggleShiftLang() {
     if (this.properties.language == "en") {
       this.properties.language = "ru"
+      localStorage.setItem("selectedLanguage", "ru");
       for (const key of this.elements.keys) {
         if (key.getAttribute("data_key-basickru") !== "none") {
           key.textContent = key.getAttribute("data_key-basickru");
@@ -380,6 +390,7 @@ const keyboard = {
       }
     } else {
       this.properties.language = "en"
+      localStorage.setItem("selectedLanguage", "en");
       for (const key of this.elements.keys) {
         if (key.getAttribute("data_key-basick") !== "none") {
           key.textContent = key.getAttribute("data_key-basick");
@@ -393,6 +404,7 @@ const keyboard = {
 let keyboardInner = document.createElement("textarea");
 keyboardInner.classList.add("keyboard__input");
 keyboardInner.setAttribute("type", "text");
+keyboardInner.setAttribute("autofocus",'');
 
 let container = document.createElement("div");
 container.classList.add("container");
