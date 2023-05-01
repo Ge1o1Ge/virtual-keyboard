@@ -336,7 +336,7 @@ body {
 }
 
 body {
-  font-family: "Arial";
+  font-family: "Lato";
   font-size: 15px;
   font-weight: 400;
   line-height: 160%;
@@ -423,3 +423,66 @@ input:active, input:hover, input:focus {
 /**
  * Style.css.
 */
+.keyboard__wrapper {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #e7e7e7;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.keyboard__input {
+  display: block;
+  max-width: 1000px;
+  width: 100%;
+  margin: 10px auto;
+  height: 100px;
+  background-color: #c8c3c3;
+  font-size: 20px;
+  transition: 0.2s;
+}
+.keyboard__row {
+  display: flex;
+  justify-content: space-between;
+}
+.keyboard__key {
+  width: 60px;
+  height: 60px;
+  background-color: #292626;
+  color: #e7e7e7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4px;
+  border-radius: 5px;
+  transition: all 0.1s ease;
+}
+.keyboard__key-backspace {
+  width: 120px;
+}
+.keyboard__key-tab {
+  width: 80px;
+}
+.keyboard__key-del {
+  width: 40px;
+}
+.keyboard__key-\\ {
+  width: 40px;
+}
+.keyboard__key-capslock {
+  width: 100px;
+}
+.keyboard__key-enter {
+  width: 135px;
+}
+.keyboard__key-shift {
+  width: 118px;
+}
+.keyboard__key-space {
+  width: 100%;
+  max-width: 442px;
+  font-size: 0;
+}
+.keyboard__key:active {
+  background-color: #ba5925;
+  border-radius: 15px;
+}
