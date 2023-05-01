@@ -41,6 +41,7 @@ const keyboard = {
   },
 
   init() {
+
     this.elements.main = document.createElement("div");;
     this.elements.keyContainer = document.createElement("div");
 
@@ -57,6 +58,13 @@ const keyboard = {
     window.addEventListener("click", () => {
       inp.value = this.properties.value;
     })
+
+    const savedLanguage = localStorage.getItem('selectedLanguage');
+    if (savedLanguage) {
+      if (savedLanguage == 'ru') {
+        this._toggleShiftLang();
+      };
+    }
 
     window.addEventListener("keydown", (e) => {
       console.log(e.key)
@@ -373,6 +381,7 @@ const keyboard = {
   _toggleShiftLang() {
     if (this.properties.language == "en") {
       this.properties.language = "ru"
+      localStorage.setItem("selectedLanguage", "ru");
       for (const key of this.elements.keys) {
         if (key.getAttribute("data_key-basickru") !== "none") {
           key.textContent = key.getAttribute("data_key-basickru");
@@ -380,6 +389,7 @@ const keyboard = {
       }
     } else {
       this.properties.language = "en"
+      localStorage.setItem("selectedLanguage", "en");
       for (const key of this.elements.keys) {
         if (key.getAttribute("data_key-basick") !== "none") {
           key.textContent = key.getAttribute("data_key-basick");
